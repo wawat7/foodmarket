@@ -4,6 +4,7 @@ import (
 	"api-foodmarket/app"
 	"api-foodmarket/exception"
 	"api-foodmarket/helper"
+	"api-foodmarket/services/product"
 	"api-foodmarket/services/role"
 	"api-foodmarket/services/user"
 	"github.com/gin-gonic/gin"
@@ -22,6 +23,10 @@ func main() {
 	userService := user.NewService(userRepository, roleRepository)
 	userController := user.NewController(userService)
 
+	productRepository := product.NewRepository(db)
+	productService := product.NewService(productRepository)
+	productController := product.NewController(productService)
+
 	// Setup Gin
 	router := gin.Default()
 	router.Use(gin.Logger())
@@ -30,6 +35,7 @@ func main() {
 	// Setup Routing
 	userController.Route(router)
 	roleController.Route(router)
+	productController.Route(router)
 
 	// Start App
 	err := router.Run(":3000")

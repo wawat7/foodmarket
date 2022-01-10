@@ -2,8 +2,11 @@ package main
 
 import (
 	"api-foodmarket/app"
+	"api-foodmarket/helper"
+	"api-foodmarket/services/product"
 	"api-foodmarket/services/role"
 	"api-foodmarket/services/user"
+	"encoding/json"
 	"fmt"
 	"gorm.io/gorm"
 	"time"
@@ -15,8 +18,9 @@ func main() {
 	configuration := app.New()
 	db := app.NewDB(configuration)
 
-	roleSeeder(db)
-	userSeeder(db)
+	//roleSeeder(db)
+	//userSeeder(db)
+	productSeeder(db)
 }
 
 func roleSeeder(db *gorm.DB) {
@@ -61,4 +65,29 @@ func userSeeder(db *gorm.DB) {
 	userData = userService.Create(userData, role.Admin)
 	fmt.Println("ended seeder user")
 
+}
+
+func productSeeder(db *gorm.DB) {
+	fmt.Println("running seeder product")
+
+	productRepository := product.NewRepository(db)
+	productService := product.NewService(productRepository)
+
+	ingredients := []string{"terigu", "cacing", "ketombe"}
+	ingredientJson, err := json.Marshal(ingredients)
+	helper.PanicIfError(err)
+
+	productData := product.Product{
+		Name:        "Product 1",
+		Description: "Ini adalah deskripsi product 1",
+		Ingredient:  string(ingredientJson),
+		Price:       20000,
+		Rate:        0,
+		Type:        product.NEW,
+		Image:       "",
+	}
+
+	_ = productService.Create(productData)
+
+	fmt.Println("ended seeder product")
 }

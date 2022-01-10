@@ -1,5 +1,7 @@
 package helper
 
+import "encoding/json"
+
 type Pagination struct {
 	Total       int `json:"total"`
 	Count       int `json:"count"`
@@ -33,4 +35,10 @@ func APIResponse(message string, code int, status string, data interface{}, pagi
 		Data: data,
 	}
 	return jsonResponse
+}
+
+func ConvertDataToJson(data interface{}) (jsonStr string) {
+	jsonByte, err := json.Marshal(data)
+	PanicIfError(err)
+	return string(jsonByte)
 }
