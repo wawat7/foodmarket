@@ -37,7 +37,7 @@ func ProductFormat(product Product) FormatProduct {
 }
 
 func ProductsFormat(products []Product) []FormatProduct {
-	var formats []FormatProduct
+	formats := []FormatProduct{}
 
 	for _, product := range products {
 		format := ProductFormat(product)

@@ -6,15 +6,17 @@ import (
 )
 
 type Order struct {
-	Id        int    `gorm:"not null;uniqueIndex;primary_key"`
-	UserInfo  string `gorm:"type:text;not null"`
-	UserId    string
-	Code      string
-	Total     int
-	Status    string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt
+	Id           int    `gorm:"not null;uniqueIndex;primary_key"`
+	UserInfo     string `gorm:"type:text;not null"`
+	UserId       int
+	Code         string
+	Total        int
+	Status       string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	DeletedAt    gorm.DeletedAt
+	OrderProduct []OrderProduct
+	OrderHistory []OrderHistory
 }
 
 type OrderProduct struct {
