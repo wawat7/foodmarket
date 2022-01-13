@@ -1,7 +1,6 @@
-package main
+package app
 
 import (
-	"api-foodmarket/app"
 	"api-foodmarket/helper"
 	"api-foodmarket/services/product"
 	"api-foodmarket/services/role"
@@ -12,11 +11,11 @@ import (
 	"time"
 )
 
-func main() {
+func SeederRun() {
 
 	fmt.Println("seeder running..")
-	configuration := app.New()
-	db := app.NewDB(configuration)
+	configuration := New()
+	db := NewDB(configuration)
 
 	//roleSeeder(db)
 	//userSeeder(db)

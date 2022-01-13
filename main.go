@@ -16,6 +16,8 @@ func main() {
 	configuration := app.New()
 	db := app.NewDB(configuration)
 
+	app.SeederRun()
+
 	roleRepository := role.NewRepository(db)
 	roleService := role.NewService(roleRepository)
 	roleController := role.NewController(roleService)
@@ -33,6 +35,9 @@ func main() {
 	orderController := order.NewController(orderService, userService, productService)
 
 	// Setup Gin
+	if configuration.Get("APP_MODE") == "RELEASE" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	router := gin.Default()
 	router.Use(gin.Logger())
 	router.Use(gin.CustomRecovery(exception.ErrorHandler))
